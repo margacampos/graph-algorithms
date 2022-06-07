@@ -28,7 +28,24 @@ const explore = ( graph, node, visited ) => {
     for ( neighbor of graph[node] ){
         explore(graph, neighbor, visited);
     }
+
     return true;
 };
 
 console.log(connectedCount(graph));
+
+// Return largest component
+
+const largestComponent = () => {
+    let biggestSize = 0;
+    const visited = new Set();
+    for ( node in graph ) {
+        if( explore( graph, node, visited ) ){
+            if(visited.size>biggestSize)biggestSize=visited.size;
+            visited.clear();
+        };
+    }
+    return biggestSize;
+};
+
+console.log(largestComponent(graph));
