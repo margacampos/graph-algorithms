@@ -5,7 +5,7 @@ const map = [
     ['W', 'W', 'L', 'L', 'W'],
     ['L', 'W', 'W', 'L', 'L'],
     ['L', 'L', 'W', 'W', 'W'],
-]
+];
 const islandCount = ( map ) => {
     // Go through map and explore when on an island block that has not being visited yet.
     const visited = new Set();
