@@ -19,7 +19,7 @@ const breadthFirstTraversal = ( graph, start ) => {
     }
 };
 
-// breadthFirstTraversal( graph, 'a' );
+breadthFirstTraversal( graph, 'a' );
 
 // ( Not complete - Does not print start ) Recursive:
 const breadthFirstTraversalRec = ( graph, start ) => {
