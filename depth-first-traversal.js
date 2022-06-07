@@ -8,15 +8,26 @@ const graph = {
 };
 
 let stack = ['a'];
-
-const depthFirstTraversal = ( graph, stack ) => {
-    if(stack.length===0)return console.log("done");
-    let start = stack.shift();
-    console.log(start);
-    for( let i = 0; i < graph[start].length; i++ ){
-        stack.unshift(graph[start][i]);
+// Iterative:
+const depthFirstTraversal = ( graph, start ) => {
+    let stack = [start];
+    while(stack.length>0){
+        let current = stack.shift();
+        console.log(current);
+        for( i of graph[current] ){
+            stack.unshift(i);
+        }
     }
-    return depthFirstTraversal(graph, stack);
 };
 
-depthFirstTraversal( graph, stack );
+depthFirstTraversal( graph, 'a' );
+
+// Recursive: 
+const depthFirstTraversalRec = ( graph, start ) => {
+    console.log(start);
+    for( let neighbor of graph[start] ){
+        depthFirstTraversalRec(graph, neighbor);
+    }
+};
+
+depthFirstTraversalRec( graph, 'a' );
