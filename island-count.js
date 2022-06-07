@@ -10,40 +10,33 @@ const islandCount = ( map ) => {
     // Go through map and explore when on an island block that has not being visited yet.
     const visited = new Set();
     let counter = 0;
+
     for ( let row = 0; row < map.length; row++ ){
         for ( let column = 0; column < map[row].length; column++ ){
-            if ( map[row][column] === 'L' && !visited.has(`${row}, ${column}`) ){
-                visited.add(`${row}, ${column}`);
-                console.log(`${row}, ${column}`)
-                explore(row, column, map, visited);
-                counter++;
-            };
+            if ( explore( row, column, map, visited ) )counter++;
         }
     }
+
     return counter;
 };
 
 const explore = (row, column, map, visited) => {
     // Explore the island and mark blocks as visited.
-    const directions = getDirections(row, column);
-    for( dir of directions ){
-        const [dirRow, dirColumn] = dir;
-        if (map[dirRow][dirColumn]==='L'){
-            if(!visited.has(`${dirRow}, ${dirColumn}`)){
-                visited.add(`${dirRow}, ${dirColumn}`);
-                explore(dirRow, dirColumn, map, visited);
-            };
-        };
-    };
-};
+    const rowInBounds = ( 0 <= row && row < map.length ); 
+    if( !rowInBounds )return false;
+    const columnInBounds = ( 0 <= column && column < map[row].length );
+    if( !columnInBounds )return false;
+    if( map[row][column] === 'W' )return false;
+    if( visited.has(`${row}, ${column}`)) return false;
+    
+    visited.add(`${row}, ${column}`);
 
-const getDirections = ( row, column ) => {
-    let directions = [];
-    if(row - 1 >= 0) directions.push([row - 1, column]);
-    if(row + 1 < map.length) directions.push([row + 1, column]);
-    if(column - 1 >= 0) directions.push([row, column - 1]);
-    if(column + 1 < map[row].length) directions.push([row, column + 1]);
-    return directions;
+    explore(row - 1, column, map, visited);
+    explore(row + 1, column, map, visited);
+    explore(row, column-1, map, visited);
+    explore(row, column+1, map, visited);
+
+    return true;
 };
 
 console.log(islandCount(map));
