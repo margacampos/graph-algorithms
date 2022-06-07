@@ -17,20 +17,18 @@ const connectedCount = ( graph ) => {
     let counter = 0;
     const visited = new Set();
     for ( node in graph ){
-        if(!visited.has(node)){
-            explore( graph, node, visited );
-            counter++;
-        }
+        if(explore( graph, node, visited )) counter++;
     }
     return counter;
 };
 
 const explore = ( graph, node, visited ) => {
-    if(visited.has(node))return;
-    visited.add(node);
+    if(visited.has(String(node)))return false;
+    visited.add(String(node));
     for ( neighbor of graph[node] ){
         explore(graph, neighbor, visited);
     }
+    return true;
 };
 
 console.log(connectedCount(graph));
