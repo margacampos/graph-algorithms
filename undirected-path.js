@@ -26,13 +26,14 @@ console.log(buildGraph(edges));
 
 const depthHasPath = ( graph, start, end, path ) => {
     if ( start === end ) return true;
-    path.push(start);
+    if ( path.has(start) ) return false;
+    path.add(start);
 
     for ( node of graph[start] ){
-        if( !path.includes(node) && depthHasPath( graph, node, end, path ) )return true;
+        if( depthHasPath( graph, node, end, path ) )return true;
     }
 
     return false;
 };
 
-console.log(depthHasPath(buildGraph(edges), 'i', 'o', []));
+console.log(depthHasPath(buildGraph(edges), 'i', 'k', new Set() ));
